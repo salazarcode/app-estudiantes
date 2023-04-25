@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Datos
+namespace Repository
 {
     public class Class1
     {

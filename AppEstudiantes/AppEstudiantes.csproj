@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Datos\Datos.csproj" />
+    <ProjectReference Include="..\Datos\Repository.csproj" />
   </ItemGroup>
 
 </Project>
