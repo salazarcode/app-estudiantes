@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
@@ -13,21 +6,15 @@ namespace Domain.Entities
 	public class Usuario
 	{
 		[Column("id")]
-		public int id { get; set; }
+		public int? id { get; set; }
 
 		[Column("cedula")]
-		public string cedula { get; set; }
+		public string? cedula { get; set; }
 
 		[Column("rolid")]
-		public int rolid { get; set; }
+		public int? rolid { get; set; }
 
 		[Column("clave")]
-		public string clave { get; set; }
-		//[column("nombredelacolumna")]
-		//public administrador administrador { get; set; }
-		//[column("nombredelacolumna")]
-		//public estudiante estudiante { get; set; }
-		//[column("nombredelacolumna")]
-		//public rol rol { get; set; }
+		public string? clave { get; set; }
 	}
 }

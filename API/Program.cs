@@ -1,5 +1,12 @@
 
 using Microsoft.AspNetCore.DataProtection.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Repository;
+using Repository.Abstract;
+using Repository.Repositories;
+using System.Xml;
+using Domain.Entities;
 
 namespace API
 {
@@ -16,7 +23,13 @@ namespace API
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
-			//builder.Services.AddScoped<>()
+			builder.Services.AddDbContext<DatabaseContext>(options =>
+			{
+				options.UseSqlServer(builder.Configuration.GetConnectionString("main"));
+			});
+
+			builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+			builder.Services.AddTransient<IAdministradorRepository, AdministradorRepository>();
 
 			var app = builder.Build();
 

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
+using Repository.Abstract;
 
 namespace Repository.Repositories
 {
-	internal class UsuariosRepository
+	public interface IUsuarioRepository : IRepository<Usuario>
 	{
 	}
 }

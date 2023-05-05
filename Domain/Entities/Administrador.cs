@@ -1,21 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
+	[Table("administrador")]
 	public class Administrador
 	{
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Correo { get; set; }
-        public int UserID { get; set; }
-        public string Telefono { get; set; }
-        public Usuario Usuario { get; set; }
+          [Column("id")]
+		public int Id { get; set; }
+
+		[Column("nombre")]
+		public string? Nombre { get; set; }
+
+		[Column("apellido")]
+		public string? Apellido { get; set; }
+
+		[Column("correo")]
+		public string? Correo { get; set; }
+
+		[Column("telefono")]
+		public string? Telefono { get; set; }
+
+		[Column("userid")]
+		public int UsuarioID { get; set; }
+
+		public virtual Usuario? Usuario { get; set; }
     }
 }

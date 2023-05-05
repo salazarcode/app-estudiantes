@@ -1,4 +1,7 @@
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Repository.Abstract;
+using Repository.Repositories;
 
 namespace API.Controllers
 {
@@ -12,22 +15,30 @@ namespace API.Controllers
     };
 
 		private readonly ILogger<WeatherForecastController> _logger;
+		private readonly IUsuarioRepository _usuariosRepo;
+		private readonly IAdministradorRepository _administradorRepo;
 
-		public WeatherForecastController(ILogger<WeatherForecastController> logger)
+		public WeatherForecastController(ILogger<WeatherForecastController> logger, IUsuarioRepository usuariosRepo, IAdministradorRepository administradorRepo)
 		{
 			_logger = logger;
+			_usuariosRepo	= usuariosRepo;
+			_administradorRepo = administradorRepo;
 		}
 
-		[HttpGet(Name = "GetWeatherForecast")]
-		public IEnumerable<WeatherForecast> Get()
+		[HttpGet]
+		[Route("Usuarios")]
+		public IEnumerable<Usuario> GetUsuarios()
 		{
-			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-			{
-				Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-				TemperatureC = Random.Shared.Next(-20, 55),
-				Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-			})
-			.ToArray();
+			var usuarios = _usuariosRepo.GetAll();
+			return usuarios;
+		}
+
+		[HttpGet]
+		[Route("Admnistradores")]
+		public IEnumerable<Administrador> GetAdministradores()
+		{
+			var administradores = _administradorRepo.GetAllWithUser();
+			return administradores;
 		}
 	}
 }
