@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
-using Repository.Abstract;
 using Repository.Repositories;
 using System.Xml;
 using Domain.Entities;
+using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
+using Domain.Services;
 
 namespace API
 {
@@ -30,6 +32,7 @@ namespace API
 
 			builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 			builder.Services.AddTransient<IAdministradorRepository, AdministradorRepository>();
+			builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 
 			var app = builder.Build();
 

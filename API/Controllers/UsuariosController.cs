@@ -1,6 +1,8 @@
 using Domain.Entities;
+using Domain.Interfaces.Repositories;
+using Domain.Interfaces.Services;
+using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using Repository.Abstract;
 using Repository.Repositories;
 
 namespace API.Controllers
@@ -9,19 +11,12 @@ namespace API.Controllers
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
-		private static readonly string[] Summaries = new[]
-		{
-	   "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-		private readonly ILogger<WeatherForecastController> _logger;
-		private readonly IUsuarioRepository _usuariosRepo;
+		private readonly IUsuarioService _usuariosService;
 		private readonly IAdministradorRepository _administradorRepo;
 
-		public WeatherForecastController(ILogger<WeatherForecastController> logger, IUsuarioRepository usuariosRepo, IAdministradorRepository administradorRepo)
+		public WeatherForecastController(IUsuarioService usuariosService, IAdministradorRepository administradorRepo)
 		{
-			_logger = logger;
-			_usuariosRepo	= usuariosRepo;
+			_usuariosService = usuariosService;
 			_administradorRepo = administradorRepo;
 		}
 
@@ -29,7 +24,7 @@ namespace API.Controllers
 		[Route("Usuarios")]
 		public IEnumerable<Usuario> GetUsuarios()
 		{
-			var usuarios = _usuariosRepo.GetAll();
+			var usuarios = _usuariosService.GetAll();
 			return usuarios;
 		}
 
