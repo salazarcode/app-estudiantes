@@ -1,22 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entities
+namespace Domain.Entities;
+
+public partial class Usuario
 {
-	[Table("usuario")]
-	public class Usuario
-	{
-		[Column("id")]
-		public int? Id { get; set; }
+	public int Id { get; set; }
 
-		[Column("cedula")]
-		public string? cedula { get; set; }
+	public string? Cedula { get; set; }
 
-		[Column("rolid")]
-		public int? rolid { get; set; }
+	public int RoleId { get; set; }
 
-		[Column("clave")]
-		public string? clave { get; set; }
+	public string? Clave { get; set; }
 
-		public Rol Rol { get; set; }
-	}
+	public string? Nombre { get; set; }
+
+	public string? Apellido { get; set; }
+
+	public string? Correo { get; set; }
+
+	public string? Telefono { get; set; }
+
+	public string? Direccion { get; set; }
+
+	public virtual Role Role { get; set; } = null!;
 }

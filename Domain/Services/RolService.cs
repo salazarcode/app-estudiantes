@@ -5,32 +5,32 @@ using Domain.Interfaces.Tools;
 
 namespace Domain.Services
 {
-	public class RolService : IRolService
+	public class RoleService : IRoleService
 	{
-		private readonly IRolRepository _repo;
-		public RolService(IRolRepository repo)
+		private readonly IRoleRepository _repo;
+		public RoleService(IRoleRepository repo)
 		{
 			_repo = repo;
 		}
 
-		public IEnumerable<Rol> Get(int? id = null)
+		public IEnumerable<Role> Get(int? id = null)
 		{
-			var res = new List<Rol>();
+			var res = new List<Role>();
 
 			if (id == null)
 				res = _repo.Get().ToList();
 			else
-				res = new List<Rol>() { _repo.Get().First(x => x.Id == (int)id) };
+				res = new List<Role>() { _repo.Get().First(x => x.Id == (int)id) };
 
 			return res;
 		}
 
-		public Rol Add(Rol entity)
+		public Role Add(Role entity)
 		{
 			return _repo.Add(entity);
 		}
 
-		public Rol Update(Rol entity)
+		public Role Update(Role entity)
 		{
 			var rol = _repo.Get().FirstOrDefault(x => x.Id == (int)entity.Id);
 
@@ -39,7 +39,7 @@ namespace Domain.Services
 			return _repo.Update(rol);
 		}
 
-		public void Remove(Rol entity)
+		public void Remove(Role entity)
 		{
 			_repo.Remove(entity);
 		}

@@ -1,12 +1,17 @@
-﻿namespace Domain.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domain.Entities;
+
+public partial class Tutor
 {
-	public class Tutor
-	{
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Telefono { get; set; }
-        public string Ci { get; set; }
-        public ICollection<Estudiante> Estudiantes { get; set; }
-    }
+    public int Id { get; set; }
+
+    public string Nombre { get; set; } = null!;
+
+    public string Apellido { get; set; } = null!;
+
+    public string? Telefono { get; set; }
+
+    public string? Ci { get; set; }
 }

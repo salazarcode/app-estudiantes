@@ -2,19 +2,18 @@ using Domain.Entities;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
-using CreateUsuarioVM = API.DTO.Requests.CreateUsuarioVM;
-using UpdateUsuarioVM = API.DTO.Requests.UpdateUsuarioVM;
+using API.DTO.Requests.Usuario;
 
 namespace API.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
-	public class UsuariosController : ControllerBase
+	public class UsuarioController : ControllerBase
 	{
 		private readonly IUsuarioService _usuariosService;
 		private readonly IMapper _mapper;
 
-		public UsuariosController(IUsuarioService usuariosService, IMapper mapper)
+		public UsuarioController(IUsuarioService usuariosService, IMapper mapper)
 		{
 			_usuariosService = usuariosService;
 			_mapper = mapper;
@@ -29,7 +28,7 @@ namespace API.Controllers
 
 
 		[HttpPut]
-		public IActionResult Update([FromBody] UpdateUsuarioVM input)
+		public IActionResult Update([FromBody] UpdateUsuarioDTO input)
 		{
 			var usuario = _mapper.Map<Usuario>(input);
 			var res = _usuariosService.Update(usuario);
@@ -38,11 +37,30 @@ namespace API.Controllers
 
 
 		[HttpPost]
-		public IActionResult Create([FromBody] CreateUsuarioVM input)
+		[Route("Register")]
+		public IActionResult Create([FromBody] CreateUsuarioDTO input)
 		{
 			var usuario = _mapper.Map<Usuario>(input);
 			var res = _usuariosService.Add(usuario);
 			return Ok(res);
+		}
+
+		[HttpPost]
+		[Route("Login")]
+		public IActionResult Login([FromBody] LoginDTO input)
+		{
+			try
+			{
+				return Ok(_usuariosService.Login(new Usuario { 
+					Cedula = input.Cedula,
+					Clave = input.Clave,
+				}));
+			}
+			catch (Exception e)
+			{
+				return BadRequest(e.Message);
+			}
+
 		}
 
 		[HttpDelete]

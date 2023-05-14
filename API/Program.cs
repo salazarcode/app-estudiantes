@@ -11,6 +11,8 @@ using Domain.Interfaces.Services;
 using Domain.Interfaces.Tools;
 using Domain.Services;
 using Infrastructure;
+using API.JWT;
+using Microsoft.Extensions.Options;
 
 namespace API
 {
@@ -32,28 +34,28 @@ namespace API
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("main"));
 			});
+			
 
 			builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-			builder.Services.AddTransient<IAdministradorRepository, AdministradorRepository>();
-			builder.Services.AddTransient<IRolRepository, RolRepository>();
+			builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 			builder.Services.AddTransient<ITutorRepository, TutorRepository>();
 			builder.Services.AddTransient<IServicioRepository, ServicioRepository>();
 			builder.Services.AddTransient<IEstudianteRepository, EstudianteRepository>();
 			builder.Services.AddTransient<ICarreraRepository, CarreraRepository>();
 
 			builder.Services.AddTransient<IUsuarioService, UsuarioService>();
-			builder.Services.AddTransient<IAdministradorService, AdministradorService>();
-			builder.Services.AddTransient<IRolService, RolService>();
+			builder.Services.AddTransient<IRoleService, RoleService>();
 			builder.Services.AddTransient<ITutorService, TutorService>();
 			builder.Services.AddTransient<IServicioService, ServicioService>();
 			builder.Services.AddTransient<IEstudianteService, EstudianteService>();
 			builder.Services.AddTransient<ICarreraService, CarreraService>();
 			
 			builder.Services.AddTransient<IUsuarioService, UsuarioService>();
-			builder.Services.AddTransient<IRolService, RolService>();
+			builder.Services.AddTransient<IRoleService, RoleService>();
 
 
 			builder.Services.AddSingleton<IHasher, Hashing>();
+			builder.Services.AddSingleton<IJwtManager, JwtManager>();
 
 			var app = builder.Build();
 

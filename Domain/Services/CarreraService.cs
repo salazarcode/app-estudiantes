@@ -34,7 +34,7 @@ namespace Domain.Services
 		{
 			var carrera = _repo.Get().FirstOrDefault(x => x.Id == (int)entity.Id);
 
-			//carrera.Nombre = entity.Nombre;
+			carrera.Descripcion = entity.Descripcion;
 
 			return _repo.Update(carrera);
 		}

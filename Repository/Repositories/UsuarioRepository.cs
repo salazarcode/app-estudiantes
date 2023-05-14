@@ -15,9 +15,9 @@ namespace Repository.Repositories
 		{
 		}
 
-		public IEnumerable<Usuario> GetWithRol()
+		public IEnumerable<Usuario> GetWithRole()
 		{
-			return this.Get().Include(x => x.Rol).ToList();
+			return this.Get().Include(x => x.Role).ToList();
 		}
 	}
 }

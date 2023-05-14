@@ -34,7 +34,10 @@ namespace Domain.Services
 		{
 			var servicio = _repo.Get().FirstOrDefault(x => x.Id == (int)entity.Id);
 
-			///servicio.Nombre = entity.Nombre;
+			servicio.FechaFin = entity.FechaFin;
+			servicio.FechaInicio = entity.FechaInicio;
+			servicio.Titulo = entity.Titulo;
+			servicio.Estado = entity.Estado;
 
 			return _repo.Update(servicio);
 		}

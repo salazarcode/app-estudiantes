@@ -3,9 +3,9 @@ using Domain.Interfaces.Repositories;
 
 namespace Repository.Repositories
 {
-	public class RolRepository : AbstractRepository<Rol>, IRolRepository
+	public class RoleRepository : AbstractRepository<Role>, IRoleRepository
 	{
-		public RolRepository(DatabaseContext dbContext) : base(dbContext)
+		public RoleRepository(DatabaseContext dbContext) : base(dbContext)
 		{
 		}
 	}

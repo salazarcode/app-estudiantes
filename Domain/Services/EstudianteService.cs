@@ -18,9 +18,9 @@ namespace Domain.Services
 			var res = new List<Estudiante>();
 
 			if (id == null)
-				res = _repo.Get().ToList();
+				res = _repo.GetWithDetails().ToList();
 			else
-				res = new List<Estudiante>() { _repo.Get().First(x => x.Id == (int)id) };
+				res = new List<Estudiante>() { _repo.GetWithDetails().First(x => x.Id == (int)id) };
 
 			return res;
 		}
@@ -34,7 +34,9 @@ namespace Domain.Services
 		{
 			var estudiante = _repo.Get().FirstOrDefault(x => x.Id == (int)entity.Id);
 
-			estudiante.Nombre = entity.Nombre;
+			estudiante.CarreraId = entity.CarreraId;
+			estudiante.TutorId = entity.TutorId;
+			estudiante.ServicioId = entity.ServicioId;
 
 			return _repo.Update(estudiante);
 		}

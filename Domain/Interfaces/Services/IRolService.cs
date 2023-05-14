@@ -2,7 +2,7 @@
 
 namespace Domain.Interfaces.Services
 {
-	public interface IRolService : IService<Rol>
+	public interface IRoleService : IService<Role>
 	{
 	}
 }

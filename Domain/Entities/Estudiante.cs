@@ -1,20 +1,25 @@
-﻿namespace Domain.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace Domain.Entities;
+
+public partial class Estudiante
 {
-	public class Estudiante
-	{
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Correo { get; set; }
-        public string Direccion { get; set; }
-        public int CarreraID { get; set; }
-        public int TutorID { get; set; }
-        public int ServicioID { get; set; }
-        public int UserID { get; set; }
-        public string Telefono { get; set; }
-        public Carrera Carrera { get; set; }
-        public Tutor Tutor { get; set; }
-        public Servicio Servicio { get; set; }
-        public Usuario Usuario { get; set; }
-    }
+    public int Id { get; set; }
+
+    public int CarreraId { get; set; }
+
+    public int TutorId { get; set; }
+
+    public int ServicioId { get; set; }
+
+    public int? UserId { get; set; }
+
+    public virtual Carrera Carrera { get; set; } = null!;
+
+    public virtual Servicio Servicio { get; set; } = null!;
+
+    public virtual Tutor Tutor { get; set; } = null!;
+
+    public virtual Usuario? User { get; set; }
 }
