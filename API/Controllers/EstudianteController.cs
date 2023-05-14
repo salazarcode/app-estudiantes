@@ -1,3 +1,4 @@
+using API.AuthFilter;
 using API.DTO.Requests;
 using API.DTO.Requests.Estudiante;
 using AutoMapper;
@@ -9,6 +10,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
+	[AuthenticationFilter("administrador")]
 	public class EstudianteController : ControllerBase
 	{
 		private readonly IEstudianteService _estudiantesService;

@@ -45,24 +45,6 @@ namespace API.Controllers
 			return Ok(res);
 		}
 
-		[HttpPost]
-		[Route("Login")]
-		public IActionResult Login([FromBody] LoginDTO input)
-		{
-			try
-			{
-				return Ok(_usuariosService.Login(new Usuario { 
-					Cedula = input.Cedula,
-					Clave = input.Clave,
-				}));
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e.Message);
-			}
-
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		public IActionResult Delete([FromRoute] int id)

@@ -50,22 +50,14 @@ namespace Domain.Services
 			_repo.Remove(entity);
 		}
 
-		public string Login(Usuario input)
+		public Usuario Login(Usuario input)
 		{
-			var usuario = _repo.Get().FirstOrDefault(x => x.Cedula == input.Cedula);
+			var usuario = _repo.GetWithRole().FirstOrDefault(x => x.Cedula == input.Cedula && x.Clave == _hasher.Hash(input.Clave));
 
-			if (usuario != null)
-			{
-				var ClaveInput = _hasher.Hash(input.Clave);
-				if (ClaveInput == usuario.Clave)
-					return usuario.Clave;
-				else
-					throw new Exception("Clave erronea");
+			if (usuario == null)
+				throw new Exception("Clave erronea");
 
-			}
-			else
-				throw new Exception("El usuario no existe");
-
+			return usuario;
 		}
 	}
 }

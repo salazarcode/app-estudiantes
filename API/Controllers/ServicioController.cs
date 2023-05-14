@@ -9,6 +9,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
+	[AuthenticationFilter("administrador")]
 	public class ServicioController : ControllerBase
 	{
 		private readonly IServicioService _serviciosService;

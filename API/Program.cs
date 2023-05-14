@@ -1,18 +1,11 @@
-
-using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Repository.Repositories;
-using System.Xml;
-using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
 using Domain.Interfaces.Tools;
 using Domain.Services;
 using Infrastructure;
-using API.JWT;
-using Microsoft.Extensions.Options;
 
 namespace API
 {
@@ -55,7 +48,7 @@ namespace API
 
 
 			builder.Services.AddSingleton<IHasher, Hashing>();
-			builder.Services.AddSingleton<IJwtManager, JwtManager>();
+			builder.Services.AddSingleton<IEncrypter, Encrypter>();
 
 			var app = builder.Build();
 

@@ -1,3 +1,4 @@
+using API.AuthFilter;
 using API.DTO.Requests.Carrera;
 using AutoMapper;
 using Domain.Entities;
@@ -8,6 +9,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
+	[AuthenticationFilter("administrador")]
 	public class CarreraController : ControllerBase
 	{
 		private readonly ICarreraService _carrerasService;
