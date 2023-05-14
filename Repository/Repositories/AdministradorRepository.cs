@@ -15,9 +15,9 @@ namespace Repository.Repositories
 		{
 		}
 
-		public IEnumerable<Administrador> GetAllWithUser()
+		public IEnumerable<Administrador> GetWithUser()
 		{
-			return DbContext.Set<Administrador>().Include(x => x.Usuario).ToList();
+			return this.Get().Include(x => x.Usuario).ToList();
 		}
 
 	}

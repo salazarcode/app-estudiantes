@@ -1,9 +1,14 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
 {
+	[Table("roles")]
 	public class Rol
 	{
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public ICollection<Usuario> Usuarios { get; set; }
+		[Column("id")]
+		public int Id { get; set; }
+
+		[Column("nombre")]
+		public string Nombre { get; set; }
     }
 }

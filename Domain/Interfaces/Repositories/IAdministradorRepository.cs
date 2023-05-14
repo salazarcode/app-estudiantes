@@ -4,6 +4,6 @@ namespace Domain.Interfaces.Repositories
 {
 	public interface IAdministradorRepository : IRepository<Administrador>
 	{
-		public IEnumerable<Administrador> GetAllWithUser();
+		public IEnumerable<Administrador> GetWithUser();
 	}
 }

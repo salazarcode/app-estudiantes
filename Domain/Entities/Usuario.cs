@@ -6,7 +6,7 @@ namespace Domain.Entities
 	public class Usuario
 	{
 		[Column("id")]
-		public int? id { get; set; }
+		public int? Id { get; set; }
 
 		[Column("cedula")]
 		public string? cedula { get; set; }
@@ -16,5 +16,7 @@ namespace Domain.Entities
 
 		[Column("clave")]
 		public string? clave { get; set; }
+
+		public Rol Rol { get; set; }
 	}
 }

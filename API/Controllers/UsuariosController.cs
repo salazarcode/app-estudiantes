@@ -1,39 +1,56 @@
 using Domain.Entities;
-using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Services;
-using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
-using Repository.Repositories;
+using AutoMapper;
+using CreateUsuarioVM = API.DTO.Requests.CreateUsuarioVM;
+using UpdateUsuarioVM = API.DTO.Requests.UpdateUsuarioVM;
 
 namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class WeatherForecastController : ControllerBase
+	public class UsuariosController : ControllerBase
 	{
 		private readonly IUsuarioService _usuariosService;
-		private readonly IAdministradorRepository _administradorRepo;
+		private readonly IMapper _mapper;
 
-		public WeatherForecastController(IUsuarioService usuariosService, IAdministradorRepository administradorRepo)
+		public UsuariosController(IUsuarioService usuariosService, IMapper mapper)
 		{
 			_usuariosService = usuariosService;
-			_administradorRepo = administradorRepo;
+			_mapper = mapper;
 		}
 
 		[HttpGet]
-		[Route("Usuarios")]
-		public IEnumerable<Usuario> GetUsuarios()
+		public IEnumerable<Usuario> Get(int? id = null)
 		{
-			var usuarios = _usuariosService.GetAll();
-			return usuarios;
+			var res = _usuariosService.Get(id != null ? (int)id : null);
+			return res;
 		}
 
-		[HttpGet]
-		[Route("Admnistradores")]
-		public IEnumerable<Administrador> GetAdministradores()
+
+		[HttpPut]
+		public IActionResult Update([FromBody] UpdateUsuarioVM input)
 		{
-			var administradores = _administradorRepo.GetAllWithUser();
-			return administradores;
+			var usuario = _mapper.Map<Usuario>(input);
+			var res = _usuariosService.Update(usuario);
+			return Ok(res);
+		}
+
+
+		[HttpPost]
+		public IActionResult Create([FromBody] CreateUsuarioVM input)
+		{
+			var usuario = _mapper.Map<Usuario>(input);
+			var res = _usuariosService.Add(usuario);
+			return Ok(res);
+		}
+
+		[HttpDelete]
+		[Route("{id}")]
+		public IActionResult Delete([FromRoute] int id)
+		{
+			_usuariosService.Remove(new Usuario{ Id = id });
+			return Ok();
 		}
 	}
 }

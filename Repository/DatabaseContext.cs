@@ -12,6 +12,12 @@ namespace Repository
 	{
 		public DbSet<Usuario> Usuarios { get; set; }
 		public DbSet<Administrador> Administrador { get; set; }
+		public DbSet<Rol> Roles { get; set; }
+		public DbSet<Tutor> Tutores { get; set; }
+		public DbSet<Estudiante> Estudiantes { get; set; }
+		public DbSet<Carrera> Carreras { get; set; }
+		public DbSet<Servicio> Servicios { get; set; }
+
 		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
 		{
 		}

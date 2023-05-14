@@ -12,26 +12,23 @@ namespace Repository
             DbContext = dbContext;
         }
 
-        public TEntity? GetById(int id)
+        public IQueryable<TEntity?> Get()
         {
-            return DbContext.Set<TEntity>().Find(id);
+	        return DbContext.Set<TEntity>();
         }
 
-        public IEnumerable<TEntity> GetAll()
-        {
-            return DbContext.Set<TEntity>().ToList();
-        }
-
-        public void Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
             DbContext.Set<TEntity>().Add(entity);
             DbContext.SaveChanges();
+            return entity;
         }
 
-        public void Update(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
             DbContext.Entry(entity).State = EntityState.Modified;
             DbContext.SaveChanges();
+            return entity;
         }
 
         public void Remove(TEntity entity)
