@@ -1,7 +1,6 @@
-﻿using AutoMapper;
+﻿using API.DTO.Requests;
+using AutoMapper;
 using Domain.Entities;
-using CreateUsuarioVM = API.DTO.Requests.CreateUsuarioVM;
-using UpdateUsuarioVM = API.DTO.Requests.UpdateUsuarioVM;
 
 namespace API.Mappings
 {
