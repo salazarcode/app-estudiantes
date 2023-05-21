@@ -1,13 +1,15 @@
+using API.AuthFilter;
+using API.DTO.Requests.Usuario;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using API.DTO.Requests.Usuario;
 
 namespace API.Controllers
 {
-    [ApiController]
+	[ApiController]
 	[Route("[controller]")]
+	[AuthenticationFilter("administrador")]
 	public class UsuarioController : ControllerBase
 	{
 		private readonly IUsuarioService _usuariosService;
@@ -49,7 +51,7 @@ namespace API.Controllers
 		[Route("{id}")]
 		public IActionResult Delete([FromRoute] int id)
 		{
-			_usuariosService.Remove(new Usuario{ Id = id });
+			_usuariosService.Remove(new Usuario { Id = id });
 			return Ok();
 		}
 	}

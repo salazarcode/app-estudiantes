@@ -15,13 +15,11 @@ namespace API.Controllers
 	{
 		private readonly IUsuarioService _usuariosService;
 		private readonly IEncrypter _encrypter;
-		private readonly string _key;
 
-		public AuthenticationController(IUsuarioService usuariosService, IEncrypter encrypter, IConfiguration conf)
+		public AuthenticationController(IUsuarioService usuariosService, IEncrypter encrypter)
 		{
 			_usuariosService = usuariosService;
 			_encrypter = encrypter;
-			_key	= conf["EncryptionKey"].ToString();
 		}
 
 		[HttpPost]
@@ -36,7 +34,7 @@ namespace API.Controllers
 					Clave = input.Clave,
 				});
 				string usuarioEncrypted = JsonConvert.SerializeObject(usuario);
-				usuarioEncrypted = _encrypter.Encrypt(usuarioEncrypted, _key);
+				usuarioEncrypted = _encrypter.Encrypt(usuarioEncrypted);
 
 				return Ok(usuarioEncrypted);
 			}
@@ -44,20 +42,6 @@ namespace API.Controllers
 			{
 				return BadRequest(e.Message);
 			}
-		}
-
-		[HttpGet]
-		[Route("GenRandomKey")]
-		public string GenRandomKey() {
-			byte[] claveBytes = new byte[32]; // 32 bytes = 256 bits
-
-			using (var rng = new RNGCryptoServiceProvider())
-			{
-				rng.GetBytes(claveBytes);
-			}
-
-			string clave = Convert.ToBase64String(claveBytes);
-			return clave;
 		}
 	}
 }

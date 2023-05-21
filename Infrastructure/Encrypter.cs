@@ -6,13 +6,19 @@ namespace Infrastructure
 {
 	public class Encrypter : IEncrypter
 	{
-		public string Decrypt(string encryptedInput, string encryptionKey)
+		private readonly string _key;
+		public Encrypter(IConfiguration conf)
+		{
+			_key = conf["EncryptionKey"].ToString();
+
+		}
+		public string Decrypt(string encryptedInput)
 		{
 			byte[] ivAndEncryptedBytes = Convert.FromBase64String(encryptedInput);
 
 			using (var aes = Aes.Create())
 			{
-				aes.Key = Encoding.UTF8.GetBytes(encryptionKey);
+				aes.Key = Encoding.UTF8.GetBytes(_key);
 
 				byte[] iv = new byte[aes.IV.Length];
 				byte[] encryptedBytes = new byte[ivAndEncryptedBytes.Length - aes.IV.Length];
@@ -31,11 +37,11 @@ namespace Infrastructure
 			}
 		}
 
-		public string Encrypt(string input, string encryptionKey)
+		public string Encrypt(string input)
 		{
 			using (var aes = Aes.Create())
 			{
-				aes.Key = Encoding.UTF8.GetBytes(encryptionKey);
+				aes.Key = Encoding.UTF8.GetBytes(_key);
 				aes.GenerateIV(); // Generar un nuevo vector de inicialización (IV) para cada encriptación
 
 				byte[] valueBytes = Encoding.UTF8.GetBytes(input);

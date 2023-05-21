@@ -8,7 +8,7 @@ namespace Infrastructure
 {
 	public interface IEncrypter
 	{
-		public string Encrypt(string input, string encryptionKey);
-		public string Decrypt(string input, string encryptionKey);
+		public string Encrypt(string input);
+		public string Decrypt(string input);
 	}
 }
