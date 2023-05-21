@@ -50,7 +50,9 @@ namespace Domain.Services
 		}
 		public Usuario Add(Usuario entity)
 		{
-			throw new NotImplementedException();
+			entity.Clave = _hasher.Hash(entity.Clave);
+
+			return _repo.Add(entity);
 		}
 
 		public Usuario Login(Usuario input)
