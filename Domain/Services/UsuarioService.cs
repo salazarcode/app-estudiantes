@@ -19,19 +19,13 @@ namespace Domain.Services
 		{
 			var res = new List<Usuario>();
 
-			if (id == null)
-				res = _repo.GetWithRole().ToList();
-			else
-				res = new List<Usuario>() { _repo.GetWithRole().First(x => x.Id == (int)id) };
+			if (id != null)
+				return res = new List<Usuario>() { _repo.GetWithRole().First(x => x.Id == (int)id) };
 
-			return res;
-		}
 
-		public Usuario Add(Usuario entity)
-		{
-			entity.Clave = _hasher.Hash(entity.Clave);
-
-			return _repo.Add(entity);
+			return new List<Usuario>() { 
+				_repo.GetWithRole().First(x => x.Id == (int)id) 
+			};
 		}
 
 		public Usuario Update(Usuario entity)
@@ -40,7 +34,12 @@ namespace Domain.Services
 
 			usuario.Cedula = entity.Cedula;
 			usuario.Clave = _hasher.Hash(entity.Clave);
-			usuario.RoleId = entity.RoleId;	
+			usuario.RoleId = entity.RoleId;
+			usuario.Nombre = entity.Nombre;
+			usuario.Apellido = entity.Apellido;
+			usuario.Telefono = entity.Telefono;
+			usuario.Correo = entity.Correo;
+			usuario.Direccion = entity.Direccion;
 
 			return _repo.Update(usuario);
 		}
@@ -49,15 +48,14 @@ namespace Domain.Services
 		{
 			_repo.Remove(entity);
 		}
+		public Usuario Add(Usuario entity)
+		{
+			throw new NotImplementedException();
+		}
 
 		public Usuario Login(Usuario input)
 		{
-			var usuario = _repo.GetWithRole().FirstOrDefault(x => x.Cedula == input.Cedula && x.Clave == _hasher.Hash(input.Clave));
-
-			if (usuario == null)
-				throw new Exception("Clave erronea");
-
-			return usuario;
+			throw new NotImplementedException();
 		}
 	}
 }

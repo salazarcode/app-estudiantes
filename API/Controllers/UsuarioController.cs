@@ -37,16 +37,6 @@ namespace API.Controllers
 			return Ok(res);
 		}
 
-
-		[HttpPost]
-		[Route("Register")]
-		public IActionResult Create([FromBody] CreateUsuarioDTO input)
-		{
-			var usuario = _mapper.Map<Usuario>(input);
-			var res = _usuariosService.Add(usuario);
-			return Ok(res);
-		}
-
 		[HttpDelete]
 		[Route("{id}")]
 		public IActionResult Delete([FromRoute] int id)

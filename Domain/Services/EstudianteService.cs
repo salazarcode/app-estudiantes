@@ -17,7 +17,7 @@ namespace Domain.Services
 		{
 			var res = new List<Estudiante>();
 
-			if (id == null)
+			if (id == null || id == 0)
 				res = _repo.GetWithDetails().ToList();
 			else
 				res = new List<Estudiante>() { _repo.GetWithDetails().First(x => x.Id == (int)id) };
