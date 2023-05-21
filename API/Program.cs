@@ -63,6 +63,7 @@ namespace API
 
 
 			app.MapControllers();
+			app.UseCors();
 
 			app.Run();
 		}
