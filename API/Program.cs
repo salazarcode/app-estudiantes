@@ -63,7 +63,11 @@ namespace API
 
 
 			app.MapControllers();
-			app.UseCors();
+			app.UseCors(opt => {
+				opt.AllowAnyOrigin();
+				opt.AllowAnyMethod();
+				opt.AllowAnyHeader();
+			});
 
 			app.Run();
 		}
