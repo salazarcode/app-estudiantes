@@ -57,7 +57,12 @@ namespace Domain.Services
 
 		public Usuario Login(Usuario input)
 		{
-			throw new NotImplementedException();
+			var usuario = _repo.GetWithRole().FirstOrDefault(x => x.Cedula == input.Cedula && x.Clave == _hasher.Hash(input.Clave));
+
+			if (usuario == null)
+				throw new Exception("Clave erronea");
+
+			return usuario;
 		}
 	}
 }
