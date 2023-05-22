@@ -50,6 +50,12 @@ namespace API
 			builder.Services.AddSingleton<IHasher, Hashing>();
 			builder.Services.AddSingleton<IEncrypter, Encrypter>();
 
+			builder.Services.AddCors(opt => {
+				opt.AllowAnyOrigin();
+				opt.AllowAnyMethod();
+				opt.AllowAnyHeader();
+			});
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -62,12 +68,12 @@ namespace API
 			app.UseAuthorization();
 
 
-			app.MapControllers();
 			app.UseCors(opt => {
 				opt.AllowAnyOrigin();
 				opt.AllowAnyMethod();
 				opt.AllowAnyHeader();
 			});
+			app.MapControllers();
 
 			app.Run();
 		}
