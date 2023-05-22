@@ -50,10 +50,14 @@ namespace API
 			builder.Services.AddSingleton<IHasher, Hashing>();
 			builder.Services.AddSingleton<IEncrypter, Encrypter>();
 
-			builder.Services.AddCors(opt => {
-				opt.AllowAnyOrigin();
-				opt.AllowAnyMethod();
-				opt.AllowAnyHeader();
+			builder.Services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(builder =>
+				{
+					builder.AllowAnyOrigin()
+						  .AllowAnyMethod()
+						  .AllowAnyHeader();
+				});
 			});
 
 			var app = builder.Build();
@@ -68,11 +72,11 @@ namespace API
 			app.UseAuthorization();
 
 
-			app.UseCors(opt => {
-				opt.AllowAnyOrigin();
-				opt.AllowAnyMethod();
-				opt.AllowAnyHeader();
-			});
+			//app.UseCors(opt => {
+			//	opt.AllowAnyOrigin();
+			//	opt.AllowAnyMethod();
+			//	opt.AllowAnyHeader();
+			//});
 			app.MapControllers();
 
 			app.Run();
