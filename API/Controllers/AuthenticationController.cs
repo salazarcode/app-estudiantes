@@ -71,6 +71,7 @@ namespace API.Controllers
 			estudiante.TutorId = (int)input.TutorID;
 			estudiante.ServicioId = servicio.Id;
 			estudiante.CarreraId = (int)input.CarreraID;
+			_estudianteService.Add(estudiante);
 
 			return Ok(_estudianteService.Get(estudiante.Id));
 		}
