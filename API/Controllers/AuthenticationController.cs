@@ -74,5 +74,27 @@ namespace API.Controllers
 
 			return Ok(_estudianteService.Get(estudiante.Id));
 		}
+
+		[HttpGet]
+		[Route("EncryptUserPasswords")]
+		public IActionResult EncryptUserPasswords()
+		{
+			try
+			{
+				var usuarios = _usuariosService.Get(null).ToList();
+				foreach (var item in usuarios)
+				{
+					item.Clave = "123456";
+					_usuariosService.Update(item);
+				}
+				return Ok(usuarios);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+
+		}
 	}
 }

@@ -17,15 +17,11 @@ namespace Domain.Services
 
 		public IEnumerable<Usuario> Get(int? id = null)
 		{
-			var res = new List<Usuario>();
-
 			if (id != null)
-				return res = new List<Usuario>() { _repo.GetWithRole().First(x => x.Id == (int)id) };
+				return new List<Usuario>() { _repo.GetWithRole().First(x => x.Id == (int)id) };
 
 
-			return new List<Usuario>() { 
-				_repo.GetWithRole().First(x => x.Id == (int)id) 
-			};
+			return _repo.GetWithRole();
 		}
 
 		public Usuario Update(Usuario entity)

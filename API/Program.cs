@@ -6,6 +6,7 @@ using Domain.Interfaces.Services;
 using Domain.Interfaces.Tools;
 using Domain.Services;
 using Infrastructure;
+using Domain.Entities;
 
 namespace API
 {
@@ -16,6 +17,15 @@ namespace API
 			var builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the container.
+			builder.Services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(builder =>
+				{
+					builder.AllowAnyOrigin()
+						  .AllowAnyMethod()
+						  .AllowAnyHeader();
+				});
+			});
 
 			builder.Services.AddAutoMapper(typeof(Program));
 			builder.Services.AddControllers();
@@ -50,19 +60,10 @@ namespace API
 			builder.Services.AddSingleton<IHasher, Hashing>();
 			builder.Services.AddSingleton<IEncrypter, Encrypter>();
 
-			builder.Services.AddCors(options =>
-			{
-				options.AddDefaultPolicy(builder =>
-				{
-					builder.AllowAnyOrigin()
-						  .AllowAnyMethod()
-						  .AllowAnyHeader();
-				});
-			});
-
 			var app = builder.Build();
 
-			// Configure the HTTP request pipeline.
+			app.UseCors();
+
 			if (app.Environment.IsDevelopment())
 			{
 				app.UseSwagger();
@@ -71,12 +72,6 @@ namespace API
 
 			app.UseAuthorization();
 
-
-			//app.UseCors(opt => {
-			//	opt.AllowAnyOrigin();
-			//	opt.AllowAnyMethod();
-			//	opt.AllowAnyHeader();
-			//});
 			app.MapControllers();
 
 			app.Run();
