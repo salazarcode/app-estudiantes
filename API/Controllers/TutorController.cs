@@ -10,7 +10,6 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	[AuthenticationFilter("administrador")]
 	public class TutorController : ControllerBase
 	{
 		private readonly ITutorService _tutoresService;
@@ -31,6 +30,7 @@ namespace API.Controllers
 
 
 		[HttpPut]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Update([FromBody] UpdateTutorDTO input)
 		{
 			var usuario = _mapper.Map<Tutor>(input);
@@ -40,6 +40,7 @@ namespace API.Controllers
 
 
 		[HttpPost]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Create([FromBody] CreateTutorDTO input)
 		{
 			var usuario = _mapper.Map<Tutor>(input);
@@ -48,6 +49,7 @@ namespace API.Controllers
 		}
 
 		[HttpDelete]
+		[AuthenticationFilter("administrador")]
 		[Route("{id}")]
 		public IActionResult Delete([FromRoute] int id)
 		{

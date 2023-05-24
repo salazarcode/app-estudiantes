@@ -55,25 +55,33 @@ namespace API.Controllers
 		[Route("Register")]
 		public IActionResult Create([FromBody] CreateUsuarioDTO input)
 		{
-			Servicio servicio = new Servicio();
-			servicio.Titulo = input.ServicioTitulo;
-			servicio.FechaInicio = input.ServicioInicio;
-			servicio.FechaFin = input.ServicioInicio.AddMonths(1);
-			servicio.Estado = false;
-			_servicioService.Add(servicio);
+			try
+			{
+				Servicio servicio = new Servicio();
+				servicio.Titulo = input.ServicioTitulo;
+				servicio.FechaInicio = input.ServicioInicio;
+				servicio.FechaFin = input.ServicioInicio.AddMonths(1);
+				servicio.Estado = false;
+				_servicioService.Add(servicio);
 
-			Usuario usuario = _mapper.Map<Usuario>(input);
-			usuario.RoleId = 2;
-			_usuariosService.Add(usuario);
+				Usuario usuario = _mapper.Map<Usuario>(input);
+				usuario.RoleId = 2;
+				_usuariosService.Add(usuario);
 
-			Estudiante estudiante = new Estudiante();
-			estudiante.UserId = usuario.Id;
-			estudiante.TutorId = (int)input.TutorID;
-			estudiante.ServicioId = servicio.Id;
-			estudiante.CarreraId = (int)input.CarreraID;
-			_estudianteService.Add(estudiante);
+				Estudiante estudiante = new Estudiante();
+				estudiante.UserId = usuario.Id;
+				estudiante.TutorId = (int)input.TutorID;
+				estudiante.ServicioId = servicio.Id;
+				estudiante.CarreraId = (int)input.CarreraID;
+				_estudianteService.Add(estudiante);
 
-			return Ok(_estudianteService.Get(estudiante.Id));
+				return Ok(_estudianteService.Get(estudiante.Id));
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+
 		}
 
 		[HttpGet]

@@ -9,7 +9,6 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	[AuthenticationFilter("administrador")]
 	public class CarreraController : ControllerBase
 	{
 		private readonly ICarreraService _carrerasService;
@@ -30,6 +29,7 @@ namespace API.Controllers
 
 
 		[HttpPut]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Update([FromBody] UpdateCarreraDTO input)
 		{
 			var usuario = _mapper.Map<Carrera>(input);
@@ -39,6 +39,7 @@ namespace API.Controllers
 
 
 		[HttpPost]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Create([FromBody] CreateCarreraDTO input)
 		{
 			var usuario = _mapper.Map<Carrera>(input);
@@ -47,6 +48,7 @@ namespace API.Controllers
 		}
 
 		[HttpDelete]
+		[AuthenticationFilter("administrador")]
 		[Route("{id}")]
 		public IActionResult Delete([FromRoute] int id)
 		{
