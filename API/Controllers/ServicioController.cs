@@ -31,10 +31,20 @@ namespace API.Controllers
 
 
 		[HttpPut]
-		public IActionResult Update([FromBody] UpdateServicioDTO input)
+		[Route("{id}")]
+		public IActionResult Update([FromRoute] int id, [FromBody] UpdateServicioDTO input)
 		{
-			var usuario = _mapper.Map<Servicio>(input);
-			var res = _serviciosService.Update(usuario);
+			var servicio = _serviciosService.Get(id).FirstOrDefault();
+			//valiadacion de null	
+			if (servicio == null)
+				return BadRequest("Servicio no encontrado");
+
+			servicio.Titulo	= input.Titulo ?? servicio.Titulo;
+			servicio.FechaFin	= input.FechaFin;
+			servicio.FechaInicio	= input.FechaInicio;
+			servicio.Estado	= input.Estado;
+
+			var res = _serviciosService.Update(servicio);
 			return Ok(res);
 		}
 
