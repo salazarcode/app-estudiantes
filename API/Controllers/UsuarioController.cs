@@ -9,7 +9,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	[AuthenticationFilter("administrador")]
+//	[AuthenticationFilter("administrador")]
 	public class UsuarioController : ControllerBase
 	{
 		private readonly IUsuarioService _usuariosService;
