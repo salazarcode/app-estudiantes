@@ -36,10 +36,10 @@ namespace API.Controllers
 
 
 		[HttpPut]
-		[Route("{UsuarioID}")]
-		public IActionResult Update([FromRoute] int UsuarioID, [FromBody] UpdateUsuarioDTO input)
+		[Route("{id}")]
+		public IActionResult Update([FromRoute] int id, [FromBody] UpdateUsuarioDTO input)
 		{
-			var usuario = _usuariosService.Get(UsuarioID).FirstOrDefault();
+			var usuario = _usuariosService.Get(id).FirstOrDefault();
 			//valiadacion de null
 			if (usuario == null)
 				return BadRequest("Usuario no encontrado");
