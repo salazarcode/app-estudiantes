@@ -51,10 +51,14 @@ namespace API.Controllers
 				return BadRequest("Usuario no encontrado");
 			
 			if (usuario.Role.Nombre.ToLower() == "estudiante") { 				
-				var servicio = _servicioService.GetAll().FirstOrDefault(x => x.Id == estudiante.ServicioId);
-				_servicioService.Remove(servicio);
-
 				var estudiante = _estudianteService.GetAll().FirstOrDefault(x => x.UserId == usuario.Id);
+
+				if (estudiante != null)
+				{
+					var servicio = _servicioService.GetAll().FirstOrDefault(x => x.Id == estudiante.ServicioId);
+					_servicioService.Remove(servicio);
+				}
+
 				_estudianteService.Remove(estudiante);	
 			}
 
