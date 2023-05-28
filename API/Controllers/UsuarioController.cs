@@ -57,9 +57,9 @@ namespace API.Controllers
 				{
 					var servicio = _servicioService.GetAll().FirstOrDefault(x => x.Id == estudiante.ServicioId);
 					_servicioService.Remove(servicio);
-				}
 
-				_estudianteService.Remove(estudiante);	
+					_estudianteService.Remove(estudiante);	
+				}
 			}
 
 			_usuariosService.Remove(usuario);
