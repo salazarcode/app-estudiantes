@@ -14,13 +14,15 @@ namespace API.Controllers
 	{
 		private readonly IUsuarioService _usuariosService;
 		private readonly IEstudianteService _estudianteService;
+		private readonly IServicioService _servicioService;
 		private readonly IMapper _mapper;
 
-		public UsuarioController(IUsuarioService usuariosService, IMapper mapper, IEstudianteService estudianteService)
+		public UsuarioController(IUsuarioService usuariosService, IMapper mapper, IEstudianteService estudianteService, IServicioService servicioService)
 		{
 			_usuariosService = usuariosService;
 			_mapper = mapper;
 			_estudianteService = estudianteService;
+			_servicioService = servicioService;
 		}
 
 		[HttpGet]
@@ -48,9 +50,12 @@ namespace API.Controllers
 			if (usuario == null)
 				return BadRequest("Usuario no encontrado");
 			
-			if (usuario.Role.Nombre.ToLower() == "estudiante") { 
+			if (usuario.Role.Nombre.ToLower() == "estudiante") { 				
+				var servicio = _servicioService.GetAll().FirstOrDefault(x => x.Id == estudiante.ServicioId);
+				_servicioService.Remove(servicio);
+
 				var estudiante = _estudianteService.GetAll().FirstOrDefault(x => x.UserId == usuario.Id);
-				_estudianteService.Remove(estudiante);			
+				_estudianteService.Remove(estudiante);	
 			}
 
 			_usuariosService.Remove(usuario);

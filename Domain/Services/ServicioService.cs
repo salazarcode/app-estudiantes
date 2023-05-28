@@ -46,5 +46,10 @@ namespace Domain.Services
 		{
 			_repo.Remove(entity);
 		}
+
+		public IQueryable<Servicio> GetAll()
+		{
+			return _repo.Get();
+		}
 	}
 }
