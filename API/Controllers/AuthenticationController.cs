@@ -43,7 +43,8 @@ namespace API.Controllers
 				string usuarioEncrypted = JsonConvert.SerializeObject(usuario);
 				usuarioEncrypted = _encrypter.Encrypt(usuarioEncrypted);
 
-				return Ok(usuarioEncrypted);
+				//retorna el usuario encriptado enuna variable token y el usuario
+				return Ok(new { token = usuarioEncrypted, usuario = usuario });
 			}
 			catch (Exception e)
 			{

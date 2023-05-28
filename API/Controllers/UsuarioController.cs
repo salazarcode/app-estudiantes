@@ -13,12 +13,14 @@ namespace API.Controllers
 	public class UsuarioController : ControllerBase
 	{
 		private readonly IUsuarioService _usuariosService;
+		private readonly IEstudianteService _estudianteService;
 		private readonly IMapper _mapper;
 
-		public UsuarioController(IUsuarioService usuariosService, IMapper mapper)
+		public UsuarioController(IUsuarioService usuariosService, IMapper mapper, IEstudianteService estudianteService)
 		{
 			_usuariosService = usuariosService;
 			_mapper = mapper;
+			_estudianteService = estudianteService;
 		}
 
 		[HttpGet]
@@ -41,7 +43,17 @@ namespace API.Controllers
 		[Route("{id}")]
 		public IActionResult Delete([FromRoute] int id)
 		{
-			_usuariosService.Remove(new Usuario { Id = id });
+			var usuario = _usuariosService.Get(id).FirstOrDefault();
+
+			if (usuario == null)
+				return BadRequest("Usuario no encontrado");
+			
+			if (usuario.Role.Nombre.ToLower() == "estudiante") { 
+				var estudiante = _estudianteService.GetAll().FirstOrDefault(x => x.UserId == usuario.Id);
+				_estudianteService.Remove(estudiante);			
+			}
+
+			_usuariosService.Remove(usuario);
 			return Ok();
 		}
 	}

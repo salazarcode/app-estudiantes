@@ -21,7 +21,7 @@ namespace Domain.Services
 				return new List<Usuario>() { _repo.GetWithRole().First(x => x.Id == (int)id) };
 
 
-			return _repo.GetWithRole();
+			return _repo.GetWithRole();	
 		}
 
 		public Usuario Update(Usuario entity)
