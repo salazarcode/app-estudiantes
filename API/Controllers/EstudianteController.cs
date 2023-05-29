@@ -10,7 +10,6 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	[AuthenticationFilter("administrador")]
 	public class EstudianteController : ControllerBase
 	{
 		private readonly IEstudianteService _estudiantesService;
@@ -31,6 +30,7 @@ namespace API.Controllers
 
 
 		[HttpPut]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Update([FromBody] UpdateEstudianteDTO input)
 		{
 			var estudiante = _mapper.Map<Estudiante>(input);
@@ -40,6 +40,7 @@ namespace API.Controllers
 
 
 		[HttpPost]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Create([FromBody] CreateEstudianteDTO input)
 		{
 			var estudiante = _mapper.Map<Estudiante>(input);
@@ -49,6 +50,7 @@ namespace API.Controllers
 
 		[HttpDelete]
 		[Route("{id}")]
+		[AuthenticationFilter("administrador")]
 		public IActionResult Delete([FromRoute] int id)
 		{
 			_estudiantesService.Remove(new Estudiante { Id = id });
