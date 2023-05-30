@@ -4,6 +4,7 @@ using API.DTO.Requests.Estudiante;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -12,13 +13,19 @@ namespace API.Controllers
 	[Route("[controller]")]
 	public class EstudianteController : ControllerBase
 	{
+		private readonly IUsuarioService _usuariosService;
 		private readonly IEstudianteService _estudiantesService;
+		private readonly IServicioService _servicioService;
 		private readonly IMapper _mapper;
 
-		public EstudianteController(IEstudianteService estudiantesService, IMapper mapper)
+		//agrega las propiedades faltantes 
+		public EstudianteController(IEstudianteService estudiantesService, IMapper mapper, IUsuarioService usuarioService,IServicioService servicioService)
 		{
 			_estudiantesService = estudiantesService;
 			_mapper = mapper;
+			_usuariosService = usuarioService;
+			_servicioService = servicioService;
+
 		}
 
 		[HttpGet]
@@ -53,7 +60,23 @@ namespace API.Controllers
 		[AuthenticationFilter("administrador")]
 		public IActionResult Delete([FromRoute] int id)
 		{
-			_estudiantesService.Remove(new Estudiante { Id = id });
+			var estudiante = _estudiantesService.Get(id).FirstOrDefault();
+			
+			if (estudiante == null)
+				return BadRequest("Estudiante no encontrado");
+
+			var usuario = _usuariosService.GetAll().FirstOrDefault(x => x.Id == estudiante.UserId);
+			var servicio = _servicioService.GetAll().FirstOrDefault(x => x.Id == estudiante.ServicioId);
+
+			if (usuario != null) 
+				_usuariosService.Remove(usuario);
+
+			if (servicio != null)
+				_servicioService.Remove(servicio);
+
+			if (estudiante != null)
+				_estudiantesService.Remove(estudiante);
+
 			return Ok();
 		}
 	}

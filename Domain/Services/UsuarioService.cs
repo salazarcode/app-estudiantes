@@ -60,5 +60,10 @@ namespace Domain.Services
 
 			return usuario;
 		}
+
+		public IQueryable<Usuario> GetAll()
+		{
+			return _repo.Get();
+		}
 	}
 }
