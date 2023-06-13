@@ -2,6 +2,7 @@ using API.DTO.Requests.Usuario;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Domain.Interfaces.Tools;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +16,16 @@ namespace API.Controllers
 		private readonly IUsuarioService _usuariosService;
 		private readonly IEstudianteService _estudianteService;
 		private readonly IServicioService _servicioService;
-		private readonly IEncrypter	_encrypter;
+		private readonly IHasher	_hasher;
 		private readonly IMapper _mapper;
 
-		public UsuarioController(IUsuarioService usuariosService, IMapper mapper, IEstudianteService estudianteService, IServicioService servicioService, IEncrypter encrypter)
+		public UsuarioController(IUsuarioService usuariosService, IMapper mapper, IEstudianteService estudianteService, IServicioService servicioService, IHasher hasher)
 		{
 			_usuariosService = usuariosService;
 			_mapper = mapper;
 			_estudianteService = estudianteService;
 			_servicioService = servicioService;
-			_encrypter = encrypter;
+			_hasher = hasher;
 		}
 
 		[HttpGet]
@@ -40,14 +41,17 @@ namespace API.Controllers
 		public IActionResult Update([FromRoute] int id, [FromBody] UpdateUsuarioDTO input)
 		{
 			var usuario = _usuariosService.Get(id).FirstOrDefault();
-			//valiadacion de null
+
 			if (usuario == null)
 				return BadRequest("Usuario no encontrado");
 
 			usuario.Nombre = input.Nombre ?? usuario.Nombre;
 			usuario.Apellido = input.Apellido ?? usuario.Apellido;
 			usuario.Cedula = input.Cedula ?? usuario.Cedula;
-			usuario.Clave = input.Clave != null ? _encrypter.Encrypt(input.Clave) : usuario.Clave;
+
+			if (input.Clave != null)
+				usuario.Clave = _hasher.Hash(input.Clave);
+
 			usuario.RoleId = input.RoleId ?? usuario.RoleId;
 			usuario.Direccion	= input.Direccion ?? usuario.Direccion;
 			usuario.Telefono	= input.Telefono ?? usuario.Telefono;

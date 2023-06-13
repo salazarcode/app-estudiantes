@@ -2,6 +2,7 @@
 using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces.Services;
+using Domain.Interfaces.Tools;
 using Domain.Services;
 using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
@@ -17,16 +18,24 @@ namespace API.Controllers
 		private readonly IUsuarioService _usuariosService;
 		private readonly IServicioService _servicioService;
 		private readonly IEstudianteService _estudianteService;
+		private readonly IHasher _hasher;
 		private readonly IEncrypter _encrypter;
 		private readonly IMapper _mapper;
 
-		public AuthenticationController(IUsuarioService usuariosService, IEncrypter encrypter, IServicioService servicioService, IEstudianteService estudianteService, IMapper mapper)
+		public AuthenticationController(	IUsuarioService usuariosService, 
+									IHasher hasher, 
+									IServicioService servicioService, 
+									IEstudianteService estudianteService, 
+									IMapper mapper,
+									IEncrypter encrypter
+									)
 		{
 			_usuariosService = usuariosService;
-			_encrypter = encrypter;
+			_hasher = hasher;
 			_servicioService = servicioService;
 			_estudianteService = estudianteService;
 			_mapper = mapper;	
+			_encrypter = encrypter;
 		}
 
 		[HttpPost]
@@ -86,15 +95,15 @@ namespace API.Controllers
 		}
 
 		[HttpGet]
-		[Route("EncryptUserPasswords")]
-		public IActionResult EncryptUserPasswords()
+		[Route("HashUserPasswords")]
+		public IActionResult HashUserPasswords()
 		{
 			try
 			{
 				var usuarios = _usuariosService.Get(null).ToList();
 				foreach (var item in usuarios)
 				{
-					item.Clave = "123456";
+					item.Clave = _hasher.Hash("123456");
 					_usuariosService.Update(item);
 				}
 				return Ok(usuarios);

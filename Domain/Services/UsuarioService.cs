@@ -26,18 +26,7 @@ namespace Domain.Services
 
 		public Usuario Update(Usuario entity)
 		{
-			var usuario = _repo.Get().FirstOrDefault(x => x.Id == (int)entity.Id);
-
-			usuario.Cedula = entity.Cedula;
-			usuario.Clave = _hasher.Hash(entity.Clave);
-			usuario.RoleId = entity.RoleId;
-			usuario.Nombre = entity.Nombre;
-			usuario.Apellido = entity.Apellido;
-			usuario.Telefono = entity.Telefono;
-			usuario.Correo = entity.Correo;
-			usuario.Direccion = entity.Direccion;
-
-			return _repo.Update(usuario);
+			return _repo.Update(entity);
 		}
 
 		public void Remove(Usuario entity)
